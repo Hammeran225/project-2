@@ -1,36 +1,48 @@
-// scripts.js
-
 const quoteContainer = document.getElementById('quote-container');
 const quote = quoteContainer.querySelector('.quote');
 const numberOfFragments = 50;
 
 function createFragments() {
+  quote.style.display = 'none';
+  
   for (let i = 0; i < numberOfFragments; i++) {
     const fragment = document.createElement('span');
     fragment.classList.add('fragment');
     fragment.innerHTML = quote.innerHTML;
+    fragment.style.position = 'absolute';
+    fragment.style.left = `${Math.random() * 100}%`;
+    fragment.style.top = `${Math.random() * 100}%`;
     quoteContainer.appendChild(fragment);
   }
 }
 
 function shatter() {
-  anime.timeline({
-    complete: () => {
-      quoteContainer.innerHTML = '<span class="quote">"What actually matters"</span>';
-    },
-  }).add({
-    targets: '.fragment',
-    opacity: [1, 0],
-    translateY: (el, i) => anime.random(-500, 500),
-    translateX: (el, i) => anime.random(-500, 500),
-    rotate: (el, i) => anime.random(-180, 180),
-    duration: 2000,
-    delay: anime.stagger(10),
-    easing: 'easeInOutExpo',
+  createFragments();
+  
+  const fragments = document.querySelectorAll('.fragment');
+  const engine = Matter.Engine.create();
+  const world = engine.world;
+  const bodies = [];
+  
+  fragments.forEach(fragment => {
+    const body = Matter.Bodies.rectangle(
+      fragment.offsetLeft + quoteContainer.offsetLeft,
+      fragment.offsetTop + quoteContainer.offsetTop,
+      fragment.offsetWidth,
+      fragment.offsetHeight,
+      { isStatic: false }
+    );
+    bodies.push(body);
   });
+
+  Matter.World.add(world, bodies);
+  
+  Matter.Engine.run(engine);
+  
+  setTimeout(() => {
+    fragments.forEach(fragment => fragment.remove());
+    quote.style.display = 'block';
+  }, 3000);
 }
 
-quoteContainer.addEventListener('click', () => {
-  createFragments();
-  shatter();
-});
+quoteContainer.addEventListener('click', shatter);
