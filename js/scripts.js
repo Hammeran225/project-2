@@ -43,7 +43,7 @@ function createShatterEffect() {
   const runner = Runner.create();
   Runner.run(runner, engine);
 
-  const group = Body.nextGroup(true);
+  const group = Matter.Body.nextGroup(true);
 
   const stack = Composites.stack(
     quoteContainer.offsetLeft,
@@ -63,7 +63,7 @@ function createShatterEffect() {
           group: group,
         },
       };
-      return Bodies.rectangle(x, y, 20, 20, options);
+      return Matter.Bodies.rectangle(x, y, 20, 20, options);
     },
   );
 
