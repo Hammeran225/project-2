@@ -46,10 +46,12 @@ function createShatterEffect() {
   const group = Matter.Body.nextGroup(true);
 
   const quoteRect = quoteContainer.getBoundingClientRect();
+  const quoteRectLeft = quoteRect.left + (quoteRect.width * 0.5) - 50;
+  const quoteRectTop = quoteRect.top + (quoteRect.height * 0.5) - 50;
 
   const stack = Composites.stack(
-    quoteRect.left,
-    quoteRect.top,
+    quoteRectLeft,
+    quoteRectTop,
     5,
     5,
     0,
@@ -57,7 +59,7 @@ function createShatterEffect() {
     (x, y) => {
       const options = {
         render: {
-          fillStyle: '#fff',
+          fillStyle: '#000',
           strokeStyle: '#000',
           lineWidth: 1,
         },
