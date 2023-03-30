@@ -1,0 +1,94 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Responsive Layouts</title>
+  <meta name="description" content="This site will serve as the hub for many sub responsive layouts">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fafafa">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Noto+Sans+Syloti+Nagri&family=Roboto&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
+  <style>
+    body {
+      font-family: 'Merriweather', serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
+    .quote-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 200px;
+      height: 200px;
+      cursor: pointer;
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      transition: transform 0.3s ease;
+    }
+
+    .quote-container:hover {
+      transform: scale(1.1);
+    }
+
+    .quote {
+      font-size: 24px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="quote-container" id="quote-container">
+      <p class="quote">"What actually matters"</p>
+    </div>
+  </div>
+  <script>
+    const quoteContainer = document.getElementById('quote-container');
+
+    function createShatterEffect() {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      canvas.style.position = 'fixed';
+      canvas.style.top = '0';
+      canvas.style.left = '0';
+      canvas.style.pointerEvents = 'none';
+      document.body.appendChild(canvas);
+
+      const Engine = Matter.Engine;
+      const Render = Matter.Render;
+      const Runner = Matter.Runner;
+      const Composite = Matter.Composite;
+      const Composites = Matter.Composites;
+      const Common = Matter.Common;
+      const MouseConstraint = Matter.MouseConstraint;
+      const Mouse = Matter.Mouse;
+      const World = Matter.World;
+      const Bodies = Matter.Bodies;
+
+      const engine = Engine.create();
+      const world = engine.world;
+
+      const render = Render.create({
+        canvas: canvas,
+        engine: engine,
+        options: {
+          width: window.innerWidth,
+          height: window.innerHeight,
+          wireframes: false,
+          background: 'transparent',
+        },
+      });
+
+      Render
