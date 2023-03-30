@@ -45,9 +45,11 @@ function createShatterEffect() {
 
   const group = Matter.Body.nextGroup(true);
 
+  const quoteRect = quoteContainer.getBoundingClientRect();
+
   const stack = Composites.stack(
-    quoteContainer.offsetLeft,
-    quoteContainer.offsetTop,
+    quoteRect.left,
+    quoteRect.top,
     5,
     5,
     0,
