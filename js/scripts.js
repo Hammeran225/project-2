@@ -16,9 +16,7 @@ function createFragments() {
 function shatter() {
   anime.timeline({
     complete: () => {
-      quoteContainer.addEventListener('transitionend', () => {
-        quoteContainer.innerHTML = '<span class="quote">"What actually matters"</span>';
-      }, { once: true });
+      quoteContainer.innerHTML = '<span class="quote">"What actually matters"</span>';
     },
   }).add({
     targets: '.fragment',
